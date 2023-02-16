@@ -5,7 +5,7 @@ cache_time (по дефолту 60 секунд). Время хранить в u
 
 Пример использования:
 
-@cache(30) 
+@cache(30)
 def find_info_by_name(company_name):
     # тут код функции
 
