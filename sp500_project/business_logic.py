@@ -1,7 +1,12 @@
-from data_access import get_all_records
+from data_access import get_all_records, record_exist, RecordAlreadyExists
 
 
 def find_info_by_name(company_name):
+    try:
+        record_exist(company_name=company_name)
+    except RecordAlreadyExists as err:
+        print(err)
+
     data = get_all_records()
     result = []
     for row in data:
