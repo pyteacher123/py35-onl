@@ -18,5 +18,5 @@ while True:
         break
     elif user_choice == "1":
         company_name = input("Enter search string: ")
-        result = find_info_by_name(company_name=company_name)
+        result = find_info_by_name(company_name)
         print(result)

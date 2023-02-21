@@ -1,12 +1,27 @@
-from data_access import get_all_records, record_exist, RecordAlreadyExists
+from data_access import get_all_records
+from time import time
 
 
+cache_storage = {}
+
+
+def cache(cache_time=5):
+    def inner(func):
+        def wrapper(*args, **kwargs):
+            value, expiration_time = cache_storage.get(args, (None, None))
+            if value and time() <= expiration_time:
+                return value
+
+            res = func(*args, **kwargs)
+            expiration_time = time() + cache_time
+            cache_storage[args] = (res, expiration_time)
+            return res
+        return wrapper
+    return inner
+
+
+@cache(cache_time=10)
 def find_info_by_name(company_name):
-    try:
-        record_exist(company_name=company_name)
-    except RecordAlreadyExists as err:
-        print(err)
-
     data = get_all_records()
     result = []
     for row in data:
