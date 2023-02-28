@@ -1,3 +1,6 @@
+# За обработку iter и next внутри класса, отвечают два магических метода
+# __iter__(self), __next__(self)
+
 from copy import deepcopy
 
 
@@ -33,6 +36,16 @@ class Album:
     def __len__(self):
         return len(self.songs)
 
+    def __iter__(self):
+        print("__iter__ calls")
+        self.obj_iterator = iter(self.songs)
+        return self
+
+    def __next__(self):
+        print("__next__ calls")
+        song_obj = next(self.obj_iterator)
+        return song_obj.name
+
     def append(self, song):
         self.songs.append(song)
 
@@ -62,17 +75,27 @@ song2.listen()
 song2.listen()
 song2.listen()
 
-print(song1.number_of_listens)
-print(song2.number_of_listens)
-print(song3.number_of_listens)
+# print(song1.number_of_listens)
+# print(song2.number_of_listens)
+# print(song3.number_of_listens)
 
 album = Album("Test", "Rock", "The Beatles")
 album.append(song1)
 album.append(song2)
 album.append(song3)
-print(album.get_info())
+# print(album.get_info())
 album.remove(song3)
-print(album.get_info())
+# print(album.get_info())
 album.append(song3)
-print(album.sort())
-print(len(album))
+# print(album.sort())
+# print(len(album))
+
+for song in album:
+    print(song)
+
+# res = iter(album)
+# print(res)
+# print(next(res))
+# print(next(res))
+# print(next(res))
+# print(next(res))
