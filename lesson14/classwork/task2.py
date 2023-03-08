@@ -62,6 +62,7 @@ class Rectagle:
 
 
 p1 = Point(0, 0)
+p1._coord_x
 print(p1.get_coord_x())
 p1.set_coord_x(-10)
 print(p1.get_coord_x())
