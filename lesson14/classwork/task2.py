@@ -30,7 +30,6 @@ class Point:
         self._coord_y = coord_y
 
     def get_coord_x(self):
-
         return self._coord_x
 
     def set_coord_x(self, value):
