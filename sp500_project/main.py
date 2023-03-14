@@ -1,6 +1,8 @@
 from business_logic import find_info_by_name
 from validators import validate_user_choice
 from errors import IncorrectUserInputError
+from providers import provide_db
+from config import DB_FILE, DB_TYPE
 
 
 while True:
@@ -18,5 +20,5 @@ while True:
         break
     elif user_choice == "1":
         company_name = input("Enter search string: ")
-        result = find_info_by_name(company_name)
+        result = find_info_by_name(company_name, provide_db(DB_TYPE, DB_FILE))
         print(result)

@@ -1,4 +1,3 @@
-from data_access import get_all_records
 from time import time
 
 
@@ -21,8 +20,8 @@ def cache(cache_time=5):
 
 
 @cache(cache_time=10)
-def find_info_by_name(company_name):
-    data = get_all_records()
+def find_info_by_name(company_name, db_connector):
+    data = db_connector.get_all_records()
     result = []
     for row in data:
         if company_name.lower() in row.get("Name").lower():
