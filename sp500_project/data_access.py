@@ -1,19 +1,8 @@
 import csv
 import json
-from abc import ABC, abstractmethod
 
 
-class IStorage(ABC):
-    @abstractmethod
-    def get_all_records(self):
-        raise NotImplementedError
-
-    @abstractmethod
-    def record_exists(self, company_name):
-        raise NotImplementedError
-
-
-class CSVStorage(IStorage):
+class CSVStorage:
     def __init__(self, file_name):
         self.file_name = file_name
 
@@ -40,7 +29,7 @@ class CSVStorage(IStorage):
         return False
 
 
-class JSONStorage(IStorage):
+class JSONStorage:
     def __init__(self, file_name):
         self.file_name = file_name
 
