@@ -35,4 +35,4 @@ def test2(a: Any) -> None:
     pass
 
 
-a: tuple(int, int) = (2, 2)
+a: tuple[int, int] = (2, 2)

@@ -1,9 +1,18 @@
 import csv
 import json
+from dataclasses import dataclass
 from typing import TypeAlias
 
 
-RecordsList: TypeAlias = list[dict[str, str | int | float]]
+@dataclass
+class CompanyDTO:
+    symbol: str
+    name: str
+    sector: str
+    price: float
+
+
+CompaniesList: TypeAlias = list[CompanyDTO]
 
 
 class CSVStorage:
@@ -21,9 +30,17 @@ class CSVStorage:
 
         self._file_name = value
 
-    def get_all_records(self) -> RecordsList:
+    def get_all_records(self) -> CompaniesList:
         with open(self.file_name) as db_file:
-            return list(csv.DictReader(db_file))
+            res = []
+            for row in csv.DictReader(db_file):
+                res.append(CompanyDTO(
+                    symbol=row['Symbol'],
+                    name=row['Name'],
+                    sector=row['Sector'],
+                    price=float(row['Price'])
+                ))
+            return res
 
     def record_exists(self, company_name: str) -> bool:
         with open(self.file_name) as db_file:
@@ -48,9 +65,17 @@ class JSONStorage:
 
         self._file_name = value
 
-    def get_all_records(self) -> RecordsList:
+    def get_all_records(self) -> CompaniesList:
         with open(self.file_name) as db_file:
-            return list(json.load(db_file))
+            res = []
+            for row in json.load(db_file):
+                res.append(CompanyDTO(
+                    symbol=row['Symbol'],
+                    name=row['Name'],
+                    sector=row['Sector'],
+                    price=float(row['Price'])
+                ))
+            return res
 
     def record_exists(self, company_name: str) -> bool:
         with open(self.file_name) as db_file:
