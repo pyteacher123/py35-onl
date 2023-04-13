@@ -2,24 +2,31 @@
 # от 5 до 15 символов email - содержит один символ @, что втора часть
 # будет равна gmail.com phone - начинается с знака +, длина 12 символов
 # telegram - начинается с @, длина от 5 до 25 символов
+from typing import Protocol, Any
+
+
+class ValidatorProtocol(Protocol):
+    def __call__(self, value: str) -> None:
+        raise NotImplementedError
+
 
 class Field:
-    def __init__(self, f_type):
+    def __init__(self, f_type: type[ValidatorProtocol]) -> None:
         self.validator_obj = f_type()
 
-    def __set_name__(self, owner, name):
+    def __set_name__(self, owner: object, name: str) -> None:
         self.name = "_" + name
 
-    def __get__(self, instance, owner):
+    def __get__(self, instance: object, owner: object) -> Any:
         return getattr(instance, self.name)
 
-    def __set__(self, instance, value):
+    def __set__(self, instance: object, value: Any) -> None:
         self.validator_obj(value)
         setattr(instance, self.name, value)
 
 
 class Name:
-    def __call__(self, value):
+    def __call__(self, value: str) -> None:
         if not value[0].isupper():
             raise ValueError("Name should start from capital letter.")
 
@@ -28,7 +35,7 @@ class Name:
 
 
 class Email:
-    def __call__(self, value):
+    def __call__(self, value: str) -> None:
         email_split = value.split('@')
         if len(email_split) != 2:
             raise ValueError("Email must contains only one @.")
@@ -38,7 +45,7 @@ class Email:
 
 
 class Phone:
-    def __call__(self, value):
+    def __call__(self, value: str) -> None:
         if value[0] != "+":
             raise ValueError("Phone must starts from +.")
 
@@ -47,7 +54,7 @@ class Phone:
 
 
 class Telegram:
-    def __call__(self, value):
+    def __call__(self, value: str) -> None:
         if value[0] != "@":
             raise ValueError("Telegram username must starts from @.")
 
@@ -56,31 +63,36 @@ class Telegram:
                              "(5, 25).")
 
 
-class User:
-    first_name = Field(Name)
-    last_name = Field(Name)
-
-    def __init__(self, first_name, last_name, contact):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.contact = contact
-
-
 class Contact:
     email = Field(Email)
     phone = Field(Phone)
     telegram = Field(Telegram)
 
-    def __init__(self, email, phone, telegram):
+    def __init__(self, email: str, phone: str, telegram: str) -> None:
         self.email = email
         self.phone = phone
         self.telegram = telegram
 
 
+class User:
+    first_name = Field(Name)
+    last_name = Field(Name)
+
+    def __init__(
+            self,
+            first_name: str,
+            last_name: str,
+            contact: Contact
+    ) -> None:
+        self.first_name = first_name
+        self.last_name = last_name
+        self.contact = contact
+
+
 class NewClass:
     email = Field(Email)
 
-    def __init__(self, email):
+    def __init__(self, email: str) -> None:
         self.email = email
 
 
