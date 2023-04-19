@@ -6,7 +6,9 @@ from .price import PriceProvider
 from .color import ColorProvider
 from .word import WordProvider
 from .sport import SportProvider
+from .company import CompanyProvider
 
 
 __all__ = ['CountryProvider', 'RandomValueFromListProvider', 'SportwareCompanyProvider',
-           'TextProvider', 'PriceProvider', 'ColorProvider', 'WordProvider', 'SportProvider']
+           'TextProvider', 'PriceProvider', 'ColorProvider', 'WordProvider', 'SportProvider',
+           'CompanyProvider']
