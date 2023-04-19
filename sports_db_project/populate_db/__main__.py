@@ -1,11 +1,14 @@
 import sys
 from data_access import SqliteGateway
-from data_access.dao import CountryDAO, ProducerDAO
+from data_access.dao import CountryDAO, ProducerDAO, SneakerDAO
 from fake_lib.providers.country import CountryProvider
 from fake_lib.providers.random_value import RandomValueFromListProvider
 from fake_lib.providers.text import TextProvider
 from fake_lib.providers.sport_company import SportwareCompanyProvider
-from factories import CountryFactory, ProducerFactory
+from fake_lib.providers.color import ColorProvider
+from fake_lib.providers.price import PriceProvider
+from fake_lib.providers.word import WordProvider
+from factories import CountryFactory, ProducerFactory, SneakerFactory
 from populate_table_command import PopulateTable
 
 
@@ -46,3 +49,16 @@ if __name__ == '__main__':
         fake_factory=producer_factory
     ).execute()
 
+    producers_list = producer_dao.get_ids_list()
+    sneaker_dao = SneakerDAO(db_gateway=db_gateway)
+    sneaker_factory = SneakerFactory(
+        word_provider=WordProvider(),
+        price_provider=PriceProvider(),
+        random_value_provider=RandomValueFromListProvider(producers_list),
+        color_provider=ColorProvider()
+    )
+    PopulateTable(
+        records_number=records_number,
+        dao=sneaker_dao,
+        fake_factory=sneaker_factory
+    ).execute()
