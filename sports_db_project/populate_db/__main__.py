@@ -6,7 +6,8 @@ from data_access.dao import (
     SneakerDAO,
     SportDAO,
     TeamDAO,
-    SponsorDAO
+    SponsorDAO,
+    SponsorTeamDAO
 )
 from fake_lib.providers import (
     CountryProvider,
@@ -17,7 +18,8 @@ from fake_lib.providers import (
     PriceProvider,
     WordProvider,
     SportProvider,
-    CompanyProvider
+    CompanyProvider,
+    DatesRangeProvider
 )
 from factories import (
     CountryFactory,
@@ -25,7 +27,8 @@ from factories import (
     SneakerFactory,
     SportFactory,
     TeamFactory,
-    SponsorFactory
+    SponsorFactory,
+    SponsorTeamFactory
 )
 from populate_table_command import PopulateTable
 
@@ -108,7 +111,7 @@ if __name__ == '__main__':
 
     sponsor_dao = SponsorDAO(db_gateway=db_gateway)
     sponsor_factory = SponsorFactory(
-        name_provider=ColorProvider(),
+        name_provider=CompanyProvider(),
         country_id_provider=RandomValueFromListProvider(countries_list),
         description_provider=TextProvider()
     )
@@ -116,4 +119,18 @@ if __name__ == '__main__':
         records_number=records_number,
         dao=sponsor_dao,
         fake_factory=sponsor_factory
+    ).execute()
+
+    sponsors_list = sponsor_dao.get_ids_list()
+    teams_list = team_dao.get_ids_list()
+    sponsor_team_dao = SponsorTeamDAO(db_gateway=db_gateway)
+    sponsor_team_factory = SponsorTeamFactory(
+        sponsor_type_id_provider=RandomValueFromListProvider(sponsors_list),
+        team_id_provider=RandomValueFromListProvider(teams_list),
+        dates_range_provider=DatesRangeProvider()
+    )
+    PopulateTable(
+        records_number=records_number,
+        dao=sponsor_team_dao,
+        fake_factory=sponsor_team_factory
     ).execute()

@@ -7,8 +7,9 @@ from .color import ColorProvider
 from .word import WordProvider
 from .sport import SportProvider
 from .company import CompanyProvider
+from .dates_range import DatesRangeProvider
 
 
 __all__ = ['CountryProvider', 'RandomValueFromListProvider', 'SportwareCompanyProvider',
            'TextProvider', 'PriceProvider', 'ColorProvider', 'WordProvider', 'SportProvider',
-           'CompanyProvider']
+           'CompanyProvider', 'DatesRangeProvider']
