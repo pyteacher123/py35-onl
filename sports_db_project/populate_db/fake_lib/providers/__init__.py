@@ -5,10 +5,8 @@ from .text import TextProvider
 from .price import PriceProvider
 from .color import ColorProvider
 from .word import WordProvider
-from .is_team import IsTeamProvider
 from .sport import SportProvider
 
 
 __all__ = ['CountryProvider', 'RandomValueFromListProvider', 'SportwareCompanyProvider',
-           'TextProvider', 'PriceProvider', 'ColorProvider', 'WordProvider', 'IsTeamProvider',
-           'SportProvider']
+           'TextProvider', 'PriceProvider', 'ColorProvider', 'WordProvider', 'SportProvider']

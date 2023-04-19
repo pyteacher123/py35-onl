@@ -7,4 +7,7 @@ class RandomValueFromListProvider:
         self._values = values
     
     def __call__(self) -> int:
-        return random.choice(self._values)[0]
+        random_value = random.choice(self._values)
+        if isinstance(random_value, tuple):
+            return random_value[0]
+        return random_value

@@ -15,8 +15,7 @@ from fake_lib.providers import (
     ColorProvider,
     PriceProvider,
     WordProvider,
-    SportProvider,
-    IsTeamProvider
+    SportProvider
 )
 from factories import (
     CountryFactory,
@@ -82,7 +81,7 @@ if __name__ == '__main__':
     sport_dao = SportDAO(db_gateway=db_gateway)
     sport_factory = SportFactory(
         sport_provider=SportProvider(),
-        is_team_provider=IsTeamProvider()
+        is_team_provider=RandomValueFromListProvider([True, False])
     )
     PopulateTable(
         records_number=records_number,

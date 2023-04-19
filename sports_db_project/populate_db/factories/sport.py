@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from fake_lib.providers import (
         SportProvider,
-        IsTeamProvider
+        RandomValueFromListProvider
     )
 
 
@@ -12,7 +12,7 @@ class SportFactory:
     def __init__(
             self,
             sport_provider: SportProvider,
-            is_team_provider: IsTeamProvider
+            is_team_provider: RandomValueFromListProvider
     ):
         self._sport_provider = sport_provider
         self._is_team_provider = is_team_provider
