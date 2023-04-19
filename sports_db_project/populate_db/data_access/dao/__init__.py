@@ -6,7 +6,8 @@ from .team import TeamDAO
 from .sponsor import SponsorDAO
 from .sponsor_team import SponsorTeamDAO
 from .player import PlayerDAO
+from .sneaker_player import SneakerPlayerDAO
 
 
 __all__ = ['CountryDAO', 'ProducerDAO', 'SneakerDAO', 'SportDAO', 'TeamDAO', 'SponsorDAO',
-           'SponsorTeamDAO', 'PlayerDAO']
+           'SponsorTeamDAO', 'PlayerDAO', 'SneakerPlayerDAO']

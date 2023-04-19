@@ -12,3 +12,8 @@ class DBGatewayProtocol(Protocol):
 class CreateRecordProtocol(Protocol):
     def create(self, data: object) -> None:
         raise NotImplementedError
+
+
+class GetIdsListProtocol(Protocol):
+    def get_ids_list(self) -> list[int]:
+        raise NotImplementedError

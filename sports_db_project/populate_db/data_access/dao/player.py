@@ -17,3 +17,7 @@ class PlayerDAO(BaseDAO):
                                         (data.email, data.name, data.surname, data.country_id, data.sport_type_id,
                                          data.team_id, profile_id))
         self._db_gateway.connection.commit()
+    
+    def get_ids_list(self) -> list[int]:
+        result = self._db_gateway.cursor.execute("SELECT id FROM players;")
+        return result.fetchall()

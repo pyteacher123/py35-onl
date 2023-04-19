@@ -8,7 +8,8 @@ from data_access.dao import (
     TeamDAO,
     SponsorDAO,
     SponsorTeamDAO,
-    PlayerDAO
+    PlayerDAO,
+    SneakerPlayerDAO
 )
 from fake_lib.providers import (
     CountryProvider,
@@ -34,7 +35,8 @@ from factories import (
     TeamFactory,
     SponsorFactory,
     SponsorTeamFactory,
-    PlayerFactory
+    PlayerFactory,
+    SneakerPlayerFactory
 )
 from populate_table_command import PopulateTable
 
@@ -160,4 +162,17 @@ if __name__ == '__main__':
         records_number=records_number,
         dao=player_dao,
         fake_factory=player_factory
+    ).execute()
+
+    players_list = player_dao.get_ids_list()
+    sneakers_list = player_dao.get_ids_list()
+    sneaker_player_dao = SneakerPlayerDAO(db_gateway=db_gateway)
+    sneaker_player_factory = SneakerPlayerFactory(
+        sneaker_id_provider=RandomValueFromListProvider(sneakers_list),
+        player_id_provider=RandomValueFromListProvider(players_list)
+    )
+    PopulateTable(
+        records_number=records_number,
+        dao=sneaker_player_dao,
+        fake_factory=sneaker_player_factory
     ).execute()
