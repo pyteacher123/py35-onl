@@ -7,7 +7,8 @@ from data_access.dao import (
     SportDAO,
     TeamDAO,
     SponsorDAO,
-    SponsorTeamDAO
+    SponsorTeamDAO,
+    PlayerDAO
 )
 from fake_lib.providers import (
     CountryProvider,
@@ -19,7 +20,11 @@ from fake_lib.providers import (
     WordProvider,
     SportProvider,
     CompanyProvider,
-    DatesRangeProvider
+    DatesRangeProvider,
+    EmailProvider,
+    PhoneProvider,
+    NameProvider,
+    SurnameProvider
 )
 from factories import (
     CountryFactory,
@@ -28,7 +33,8 @@ from factories import (
     SportFactory,
     TeamFactory,
     SponsorFactory,
-    SponsorTeamFactory
+    SponsorTeamFactory,
+    PlayerFactory
 )
 from populate_table_command import PopulateTable
 
@@ -133,4 +139,25 @@ if __name__ == '__main__':
         records_number=records_number,
         dao=sponsor_team_dao,
         fake_factory=sponsor_team_factory
+    ).execute()
+
+    sport_types_list = sport_dao.get_ids_list()
+    player_dao = PlayerDAO(db_gateway=db_gateway)
+    player_factory = PlayerFactory(
+        phone_provider=PhoneProvider(),
+        name_provider=NameProvider(),
+        surname_provider=SurnameProvider(),
+        email_provider=EmailProvider(),
+        description_provider=TextProvider(),
+        age_provider=RandomValueFromListProvider(range(16, 50)),
+        height_provider=RandomValueFromListProvider(range(150, 220)),
+        weight_provider=RandomValueFromListProvider(range(50, 100)),
+        country_id_provider=RandomValueFromListProvider(countries_list),
+        sport_type_id_provider=RandomValueFromListProvider(sport_types_list),
+        team_id_provider=RandomValueFromListProvider(teams_list)
+    )
+    PopulateTable(
+        records_number=records_number,
+        dao=player_dao,
+        fake_factory=player_factory
     ).execute()

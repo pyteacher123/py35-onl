@@ -5,7 +5,8 @@ from .sport import SportFactory
 from .team import TeamFactory
 from .sponsor import SponsorFactory
 from .sponsor_team import SponsorTeamFactory
+from .player import PlayerFactory
 
 
 __all__ = ['CountryFactory', 'ProducerFactory', 'SneakerFactory', 'SportFactory', 'TeamFactory',
-           'SponsorFactory', 'SponsorTeamFactory']
+           'SponsorFactory', 'SponsorTeamFactory', 'PlayerFactory']

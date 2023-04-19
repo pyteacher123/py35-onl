@@ -8,8 +8,13 @@ from .word import WordProvider
 from .sport import SportProvider
 from .company import CompanyProvider
 from .dates_range import DatesRangeProvider
+from .name import NameProvider
+from .surname import SurnameProvider
+from .email import EmailProvider
+from .phone import PhoneProvider
 
 
 __all__ = ['CountryProvider', 'RandomValueFromListProvider', 'SportwareCompanyProvider',
            'TextProvider', 'PriceProvider', 'ColorProvider', 'WordProvider', 'SportProvider',
-           'CompanyProvider', 'DatesRangeProvider']
+           'CompanyProvider', 'DatesRangeProvider', 'NameProvider', 'SurnameProvider',
+           'EmailProvider', 'PhoneProvider']
