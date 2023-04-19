@@ -2,10 +2,12 @@ from __future__ import annotations
 from data_access.dto import SneakerDTO
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from fake_lib.providers.word import WordProvider
-    from fake_lib.providers.price import PriceProvider
-    from fake_lib.providers.random_value import RandomValueFromListProvider
-    from fake_lib.providers.color import ColorProvider
+    from fake_lib.providers import (
+        WordProvider,
+        PriceProvider,
+        RandomValueFromListProvider,
+        ColorProvider
+    )
 
 
 class SneakerFactory:

@@ -1,14 +1,30 @@
 import sys
 from data_access import SqliteGateway
-from data_access.dao import CountryDAO, ProducerDAO, SneakerDAO
-from fake_lib.providers.country import CountryProvider
-from fake_lib.providers.random_value import RandomValueFromListProvider
-from fake_lib.providers.text import TextProvider
-from fake_lib.providers.sport_company import SportwareCompanyProvider
-from fake_lib.providers.color import ColorProvider
-from fake_lib.providers.price import PriceProvider
-from fake_lib.providers.word import WordProvider
-from factories import CountryFactory, ProducerFactory, SneakerFactory
+from data_access.dao import (
+    CountryDAO,
+    ProducerDAO,
+    SneakerDAO,
+    SportDAO,
+    TeamDAO
+)
+from fake_lib.providers import (
+    CountryProvider,
+    RandomValueFromListProvider,
+    TextProvider,
+    SportwareCompanyProvider,
+    ColorProvider,
+    PriceProvider,
+    WordProvider,
+    SportProvider,
+    IsTeamProvider
+)
+from factories import (
+    CountryFactory,
+    ProducerFactory,
+    SneakerFactory,
+    SportFactory,
+    TeamFactory
+)
 from populate_table_command import PopulateTable
 
 
@@ -61,4 +77,29 @@ if __name__ == '__main__':
         records_number=records_number,
         dao=sneaker_dao,
         fake_factory=sneaker_factory
+    ).execute()
+
+    sport_dao = SportDAO(db_gateway=db_gateway)
+    sport_factory = SportFactory(
+        sport_provider=SportProvider(),
+        is_team_provider=IsTeamProvider()
+    )
+    PopulateTable(
+        records_number=records_number,
+        dao=sport_dao,
+        fake_factory=sport_factory
+    ).execute()
+
+    sports_lists = sport_dao.get_ids_list()
+    team_dao = TeamDAO(db_gateway=db_gateway)
+    team_factory = TeamFactory(
+        name_provider=WordProvider(),
+        country_id_provider=RandomValueFromListProvider(countries_list),
+        description_provider=TextProvider(),
+        sport_type_id_provider=RandomValueFromListProvider(sports_lists)
+    )
+    PopulateTable(
+        records_number=records_number,
+        dao=team_dao,
+        fake_factory=team_factory
     ).execute()

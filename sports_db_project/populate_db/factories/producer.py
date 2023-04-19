@@ -2,9 +2,11 @@ from __future__ import annotations
 from data_access.dto import ProducerDTO
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from fake_lib.providers.random_value import RandomValueFromListProvider
-    from fake_lib.providers.text import TextProvider
-    from fake_lib.providers.sport_company import SportwareCompanyProvider
+    from fake_lib.providers import (
+        RandomValueFromListProvider, 
+        TextProvider, 
+        SportwareCompanyProvider
+    )
 
 
 class ProducerFactory:
