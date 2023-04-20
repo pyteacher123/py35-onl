@@ -1,6 +1,6 @@
 from __future__ import annotations
 from .base import BaseDAO
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:
     from dto import PlayerDTO
 
@@ -20,4 +20,10 @@ class PlayerDAO(BaseDAO):
     
     def get_ids_list(self) -> list[int]:
         result = self._db_gateway.cursor.execute("SELECT id FROM players;")
+        return result.fetchall()
+    
+    def get_list(self) -> list[tuple]:
+        result = self._db_gateway.cursor.execute("SELECT players.id, players.name, players.surname, profiles.age, countries.name, teams.name "
+                                                 "FROM players JOIN profiles ON players.profile_id = profiles.id JOIN countries ON "
+                                                 "players.country_id = countries.id JOIN teams ON players.team_id = teams.id;")
         return result.fetchall()
