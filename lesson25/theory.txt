@@ -1,0 +1,6 @@
+INSERT - Create 
+SELECT - Read
+UPDATE - Update
+DELETE - Delete 
+=======
+CRUD - набор базовых операций для манипуляции над данными в БД.
