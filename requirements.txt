@@ -6,3 +6,4 @@ pre-commit==3.0.4
 mypy==1.1.1
 types-openpyxl==3.1.0.3
 openpyxl-stubs==0.1.25
+dnslib==0.9.23
