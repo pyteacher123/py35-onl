@@ -7,3 +7,6 @@ mypy==1.1.1
 types-openpyxl==3.1.0.3
 openpyxl-stubs==0.1.25
 dnslib==0.9.23
+requests==2.31.0
+prettytable==3.7.0
+dacite==1.8.1

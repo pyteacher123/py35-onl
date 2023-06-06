@@ -31,7 +31,7 @@ def send_tcp_message(domain_name: str, message: str, port: int = 80) -> str:
     server_address = socket.gethostbyname(domain_name)
     print("Create connection.")
     sock.connect((server_address, port))
-    
+
     # Add encryption
     if port == 443:
         context = ssl.create_default_context()
