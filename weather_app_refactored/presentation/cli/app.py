@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 class CliApp:
     def __init__(self, weather_service: WeatherServiceProtocol) -> None:
         self._weather_service = weather_service
-    
+
     def run(self) -> None:
         while True:
             user_choice = input("1 - Check weather\n2 - Exit\nYour choice: ")
@@ -19,4 +19,3 @@ class CliApp:
                 answer = input("Enter cities: ")
                 weather_data_in_cities = self._weather_service.get_weather_in_cities(cities=answer)
                 show_as_table(weather_data_in_cities)
-                

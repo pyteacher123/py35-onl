@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 class GetWeatherService:
     def __init__(self, weather_api_adapter: WeatherApiAdapterProtocol) -> None:
         self._weather_api = weather_api_adapter
-    
+
     def get_weather_in_cities(self, cities: str) -> list[WeatherDTO]:
         cities = cities.split()
         result: list[WeatherDTO] = []

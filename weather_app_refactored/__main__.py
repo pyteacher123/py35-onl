@@ -15,11 +15,11 @@ from config import OWM_API_KEY, OWM_BASE_URL
 
 def run_cli():
     with requests.Session() as session:
-        # creation of adapter (it incapsulates all interaction with 3rd-party data source)
+        # creation of adapter (it incapsulates all interaction with 3rd-party data sources)
         weather_api = OpenWeatherMap(session=session, api_key=OWM_API_KEY, base_url=OWM_BASE_URL)
-        # creation of service (it incapsulates all code that realize business rules of our application)
+        # creation of service (it incapsulates all the code that realize the business rules of our application)
         weather_service = GetWeatherService(weather_api_adapter=weather_api)
-        # creation of app (it incapsulates all interaction with users of our app)
+        # creation of app (it incapsulates all interaction with the users of our application)
         app = CliApp(weather_service=weather_service)
         app.run()
 
