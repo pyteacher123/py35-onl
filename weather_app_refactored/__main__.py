@@ -6,28 +6,23 @@ interaction with 3rd-party system in our code.
 """
 
 import requests
-from prettytable import PrettyTable
-from openWeatherMap.client import OpenWeatherMap
-from services import GetWeatherService
+
+from data_access.openWeatherMap.client import OpenWeatherMap
+from business_logic.services import GetWeatherService
+from presentation.cli.app import CliApp
+from config import OWM_API_KEY, OWM_BASE_URL
+
+
+def run_cli():
+    with requests.Session() as session:
+        # creation of adapter (it incapsulates all interaction with 3rd-party data source)
+        weather_api = OpenWeatherMap(session=session, api_key=OWM_API_KEY, base_url=OWM_BASE_URL)
+        # creation of service (it incapsulates all code that realize business rules of our application)
+        weather_service = GetWeatherService(weather_api_adapter=weather_api)
+        # creation of app (it incapsulates all interaction with users of our app)
+        app = CliApp(weather_service=weather_service)
+        app.run()
 
 
 if __name__ == "__main__":
-    while True:
-        user_choice = input("1 - Check weather\n2 - Exit\nYour choice: ")
-        if user_choice == '2':
-            print("GOODBYE!")
-            break
-        elif user_choice == '1':
-            answer = input("Enter cities: ")
-            table = PrettyTable()
-            table.field_names = ['city', 'temp', 'description', 'humidity']
-            with requests.Session() as session:
-                weather_api = OpenWeatherMap(session=session)
-                weather_service = GetWeatherService(weather_api_adapter=weather_api)
-                data = weather_service.get_weather_in_cities(cities=answer)
-                
-            for weather_data in data:            
-                table.add_row([weather_data.name, weather_data.main.temp, weather_data.weather[0].description, 
-                                        weather_data.main.humidity])
-                
-            print(table)
+    run_cli()

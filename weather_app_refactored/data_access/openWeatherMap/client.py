@@ -16,8 +16,10 @@ T = TypeVar('T')
 
 
 class OpenWeatherMap:
-    def __init__(self, session: Session) -> None:
+    def __init__(self, session: Session, api_key: str, base_url: str) -> None:
         self._session = session
+        self._api_key = api_key
+        self._base_url = base_url
     
     def _request(
             self,
@@ -28,7 +30,7 @@ class OpenWeatherMap:
             json = None,
             data = None
     ) -> Response:
-        url = OWM_BASE_URL + url_path
+        url = self._base_url + url_path
         res = self._session.request(method=method, url=url, params=params, headers=headers, json=json, data=data)
         return res
 
@@ -37,5 +39,6 @@ class OpenWeatherMap:
         return from_dict(model, resp.json())
 
     def get_current_weather_in_city(self, city_name: str) -> WeatherDTO:
-        resp = self._get(WeatherDTO, url_path="data/2.5/weather", params={"q": city_name, "appid": OWM_API_KEY, "units": "metric"})
+        resp = self._get(WeatherDTO, url_path="data/2.5/weather", params={"q": city_name, "appid": self._api_key, 
+                                                                          "units": "metric"})
         return resp
